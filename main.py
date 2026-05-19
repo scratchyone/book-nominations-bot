@@ -81,7 +81,7 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
     reactionses = reaction.message.reactions
     reactions = None
     for r in reactionses:
-        if r.emoji.name == reaction.emoji:
+        if r.emoji == reaction.emoji.name:
             reactions = await r.users().flatten()
             break
     reaction.message = await reaction.message.channel.fetch_message(reaction.message.id)
