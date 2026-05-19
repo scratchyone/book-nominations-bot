@@ -1,8 +1,11 @@
 import os
+import sys
 
 import discord
 import dotenv
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+sys.stdout.reconfigure(line_buffering=True)
 
 dotenv.load_dotenv()
 
