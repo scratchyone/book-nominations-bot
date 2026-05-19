@@ -142,4 +142,18 @@ async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
 #     await ctx.respond(f"Hello {name}!")
 
 
+@bot.event
+async def on_ready():
+    print(f"Logged in as {bot.user.name}")
+    # lets fetch old messages to pull them into cache
+    channel = bot.get_channel(1506087646819127437)
+    if channel is None:
+        print("failed to get channel")
+        return
+    i = 0
+    async for message in channel.history(limit=100):
+        i += 1
+    print(f"fetched {i} messages")
+
+
 bot.run(os.getenv("BOT_TOKEN"))
