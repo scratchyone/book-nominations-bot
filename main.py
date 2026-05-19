@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 import discord
@@ -46,7 +47,29 @@ async def on_message(message: discord.Message):
 
 
 @bot.event
-async def on_raw_reaction_add(reaction: discord.Reaction, user: discord.User):
+async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
+    class Reaction:
+        channel: discord.TextChannel
+        message: discord.Message
+        user: discord.User
+        emoji: str
+
+        def __init__(self):
+            pass
+
+        async def _init(self) -> None:
+            self.emoji = reaction_.emoji
+            self.user = await bot.get_or_fetch(discord.User, reaction_.user_id)
+            self.channel = await bot.get_or_fetch(
+                discord.TextChannel, reaction_.channel_id
+            )
+            self.message = await self.channel.fetch_message(reaction_.message_id)
+
+    reaction = Reaction()
+    await reaction._init()
+
+    user = reaction.user
+
     print(f"saw reaction {reaction.emoji} from {user.name}")
     if reaction.emoji != "📚":
         return
@@ -110,6 +133,8 @@ async def on_raw_reaction_add(reaction: discord.Reaction, user: discord.User):
                 if channel is None or isinstance(channel, discord.TextChannel) is False:
                     print("channel is None")
                     return
+
+                channel: discord.TextChannel
 
                 if message.accepted:
                     print("message already accepted")
