@@ -4,6 +4,7 @@ import sys
 
 import discord
 import dotenv
+from sqlalchemy.orm.base import manager_of_class
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 sys.stdout.reconfigure(line_buffering=True)
@@ -170,6 +171,32 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
 # async def hello(ctx, name: str | None = None):
 #     name = name or ctx.author.name
 #     await ctx.respond(f"Hello {name}!")
+
+
+@bot.slash_command(default_member_permissions=discord.Permissions(manage_messages=True))
+async def delete_message(ctx: discord.ApplicationContext, message_id: int):
+    with Session(bind=engine) as session:
+        message = session.exec(
+            select(NominationMessage).where(NominationMessage.id == message_id)
+        ).first()
+        if message is not None:
+            # find original message
+            user_message = await (
+                await bot.fetch_channel(1506087646819127437)
+            ).fetch_message(message.id)
+            # remove the pin reaction
+            await user_message.remove_reaction("📌", user_message.guild.me)
+            # now lets get the nomination message
+            if message.nomination_message_id is not None:
+                nomination_message = await (
+                    await bot.fetch_channel(1506091012920180817)
+                ).fetch_message(message.nomination_message_id)
+                await nomination_message.delete()
+            message.removed = True
+            session.commit()
+            await ctx.respond(f"Deleted message {message_id}")
+        else:
+            await ctx.respond(f"Message {message_id} not found")
 
 
 @bot.event
