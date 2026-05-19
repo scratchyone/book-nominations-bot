@@ -44,6 +44,7 @@ async def on_message(message: discord.Message):
 
 @bot.event
 async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
+    print(f"saw reaction {reaction.emoji} from {user.name}")
     if reaction.emoji != "📚":
         return
     if reaction.message.channel.id != 1506087646819127437:
@@ -56,6 +57,7 @@ async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
         if r.emoji == reaction.emoji:
             reactions = await r.users().flatten()
             break
+    print("about to check if reactions is none")
     if reactions is None:
         return
     print("printing reaction users")
