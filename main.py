@@ -142,6 +142,10 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
                     print("message already accepted")
                     # get the message
                     if message.nomination_message_id is not None:
+                        print(
+                            "editing nomination message, new vote count: ",
+                            len(reactions_filtered),
+                        )
                         nomination_message = await channel.fetch_message(
                             message.nomination_message_id
                         )
