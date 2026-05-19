@@ -7,7 +7,7 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 dotenv.load_dotenv()
 
 
-REACTION_REQUIREMENT = 3
+REACTION_REQUIREMENT = 2
 
 
 class NominationMessage(SQLModel, table=True):
