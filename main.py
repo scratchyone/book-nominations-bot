@@ -146,16 +146,14 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
                             "editing nomination message, new vote count: ",
                             len(reactions_filtered),
                         )
-                        nomination_message = await channel.fetch_message(
+                        old_nomination_message = await channel.fetch_message(
                             message.nomination_message_id
                         )
-                        if nomination_message is None:
+                        if old_nomination_message is None:
                             print("nomination_message is None")
                             return
                         # else edit the message to reflect the new vote number
-                        await nomination_message.edit(
-                            embed=nomination_message.embeds[0]
-                        )
+                        await old_nomination_message.edit(embed=nomination_message)
                     return
                 if message.removed:
                     print("message removed")
