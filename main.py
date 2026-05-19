@@ -6,7 +6,7 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 dotenv.load_dotenv()
 
-engine = create_engine("sqlite:///data.db")
+engine = create_engine("sqlite:///data/data.db")
 SQLModel.metadata.create_all(engine)
 
 REACTION_REQUIREMENT = 3
