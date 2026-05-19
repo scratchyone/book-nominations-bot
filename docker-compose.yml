@@ -1,0 +1,8 @@
+services:
+  bot:
+    image: book-nominations-bot
+    env_file:
+      - .env
+    volumes:
+      - ./data.db:/app/data.db
+    restart: unless-stopped
