@@ -6,8 +6,6 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 dotenv.load_dotenv()
 
-engine = create_engine("sqlite:///data/data.db")
-SQLModel.metadata.create_all(engine)
 
 REACTION_REQUIREMENT = 3
 
@@ -17,6 +15,10 @@ class NominationMessage(SQLModel, table=True):
     nomination_message_id: int | None = Field(default=None)
     accepted: bool = Field(default=False)
     removed: bool = Field(default=False)
+
+
+engine = create_engine("sqlite:///data/data.db", echo=True)
+SQLModel.metadata.create_all(engine)
 
 
 intents = discord.Intents.default()
