@@ -32,7 +32,7 @@ async def on_message(message: discord.Message):
     if message.channel.id != 1506087646819127437:
         return
     # now, we will add a reaction to the message
-    await message.add_reaction("books")
+    await message.add_reaction("📚")
     # now we will add the message to the database
     with Session(engine) as session:
         session.add(NominationMessage(id=message.id))
@@ -42,7 +42,7 @@ async def on_message(message: discord.Message):
 
 @bot.event
 async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
-    if reaction.emoji != "books":
+    if reaction.emoji != "📚":
         return
     if reaction.message.channel.id != 1506087646819127437:
         return
@@ -129,7 +129,7 @@ async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
 
                 session.add(message)
                 session.commit()
-        await reaction.message.add_reaction("pushpin")
+        await reaction.message.add_reaction("📌")
 
 
 # @bot.slash_command()
