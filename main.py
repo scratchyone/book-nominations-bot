@@ -72,8 +72,10 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
 
     print(f"saw reaction {reaction.emoji} from {user.name}")
     if reaction.emoji != "📚":
+        print(f"reaction emoji is {reaction.emoji}, not 📚")
         return
     if reaction.message.channel.id != 1506087646819127437:
+        print(f"channel id is {reaction.message.channel.id}, not 1506087646819127437")
         return
 
     # now, we will check if the reaction count meets the requirement
