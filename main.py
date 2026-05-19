@@ -52,7 +52,6 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
         channel: discord.TextChannel
         message: discord.Message
         user: discord.User
-        emoji: str
 
         def __init__(self):
             pass
@@ -71,9 +70,7 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
     user = reaction.user
 
     print(f"saw reaction {reaction.emoji} from {user.name}")
-    import unicodedata
-
-    if unicodedata.name(reaction.emoji, "") != unicodedata.name("📚", ""):
+    if reaction.emoji != "📚" and reaction.emoji.name != "📚":
         print(f"reaction emoji is {reaction.emoji}, not 📚")
         return
     if reaction.message.channel.id != 1506087646819127437:
