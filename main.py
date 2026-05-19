@@ -174,7 +174,8 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
 
 
 @bot.slash_command(default_member_permissions=discord.Permissions(manage_messages=True))
-async def delete_message(ctx: discord.ApplicationContext, message_id: int):
+async def delete_message(ctx: discord.ApplicationContext, message_id_: str):
+    message_id = int(message_id_)
     with Session(bind=engine) as session:
         message = session.exec(
             select(NominationMessage).where(NominationMessage.id == message_id)
