@@ -63,7 +63,7 @@ async def on_raw_reaction_add(reaction_: discord.RawReactionActionEvent):
                 discord.TextChannel, reaction_.channel_id
             )
             self.message = await self.channel.fetch_message(reaction_.message_id)
-            print("message: self.message")
+            print(f"message: {self.message}")
 
     reaction = Reaction()
     await reaction._init()
